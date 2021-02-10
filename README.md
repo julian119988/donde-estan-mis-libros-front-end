@@ -2,5 +2,5 @@
 
 Se le agrega front-end al back-end hecho en la primera parte
 
-´npm i´
+npm i
 
