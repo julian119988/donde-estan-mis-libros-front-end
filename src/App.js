@@ -1,16 +1,14 @@
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
-
-import { Image, Container } from 'react-bootstrap';
-import Persona from './Components/Persona';
-import Libro from './Components/Libro';
-import Genero from './Components/Genero';
+import { Image, Container } from "react-bootstrap";
+import Persona from "./Components/Persona";
+import Libro from "./Components/Libro";
+import Genero from "./Components/Genero";
 
 function App() {
   return (
     <div className="App">
-      <Container className='mt-5'>
+      <Container className="mt-5">
         <h1>DONDE ESTAN MIS LIBROS</h1>
         <Persona />
         <Libro />
