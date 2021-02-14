@@ -6,12 +6,18 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
+<<<<<<< HEAD
     "axios": "^0.21.1",
+=======
+>>>>>>> 0430526aa0724924228ac7127451f758449035d7
     "bootstrap": "^4.6.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
     "react-dom": "^17.0.1",
+<<<<<<< HEAD
     "react-router-dom": "^5.2.0",
+=======
+>>>>>>> 0430526aa0724924228ac7127451f758449035d7
     "react-scripts": "4.0.2",
     "web-vitals": "^1.1.0"
   },
