@@ -2,10 +2,6 @@
 
 Se le agrega front-end al back-end hecho en la primera parte
 
-
-
-
-
 # Para aportar al trabajo
 
 ## Para empezar
@@ -22,9 +18,3 @@ Cuando termines el trabajo haces un commit `git commit -m "El mensaje del commit
 
 Cada vez que empezamos a trabajar otra vez tenemos que hacer `git pull origin main` y un `npm i` por si se instalo alguna dependencia.
 Luego trabajamos en nuestra branch, hacemos commit y pusheamos en esa branch. Despues en github creas una pull request de tu rama a la main en la pagina de github. (Otro compañero tiene que ver la pull request y hacer el merge o no del trabajo.)
-
-
-
-
-
-
