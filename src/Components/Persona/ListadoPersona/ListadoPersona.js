@@ -1,9 +1,9 @@
 import Table from "react-bootstrap/Table";
-import ItemList from "../ItemList/ItemList";
+import ItemList from "../../ItemList/ItemList";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function CrearPersona() {
+const ListadoPersona = () => {
   const [personas, setPersonas] = useState([""]);
 
   function fetchPersona() {
@@ -25,6 +25,7 @@ export default function CrearPersona() {
 
   return (
     <Table className="table-bordered table-hover">
+      <h1> PERSONA </h1>
       <thead className="thead-dark">
         <tr key="primerTr" className=".thead-dark">
           {Object.keys(personas[0]).map((key, index) => {
@@ -45,3 +46,5 @@ export default function CrearPersona() {
     </Table>
   );
 }
+
+export default ListadoPersona
