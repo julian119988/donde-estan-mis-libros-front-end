@@ -14,6 +14,7 @@ function App() {
       <Link to='/personas'><Button variant="danger">Personas</Button>{' '} </Link>
       <Link to='/libros'><Button variant="danger">Libros</Button>{' '}</Link>
       <Link to='/generos'><Button variant="danger">Generos</Button>{' '}</Link>
+      <Link to='/'><Button variant="danger">Inicio</Button>{' '}</Link>
 
       <Switch>
         <Route path='/personas'><Persona/></Route>
