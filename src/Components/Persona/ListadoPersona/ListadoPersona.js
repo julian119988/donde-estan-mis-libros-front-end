@@ -25,7 +25,6 @@ const ListadoPersona = () => {
 
   return (
     <Table className="table-bordered table-hover">
-      <h1> PERSONA </h1>
       <thead className="thead-dark">
         <tr key="primerTr" className=".thead-dark">
           {Object.keys(personas[0]).map((key, index) => {
@@ -45,6 +44,6 @@ const ListadoPersona = () => {
       </tbody>
     </Table>
   );
-}
+};
 
-export default ListadoPersona
+export default ListadoPersona;
