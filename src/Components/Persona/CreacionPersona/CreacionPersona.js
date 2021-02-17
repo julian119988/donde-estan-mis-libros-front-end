@@ -6,9 +6,10 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
+import Card from "react-bootstrap/Card";
 
 function CreacionPersona() {
-  const [nuevoUsuario, setNuevoUsuario] = useState();
+  const [nuevoUsuario, setNuevoUsuario] = useState("");
   const history = useHistory();
 
   const nombreRef = useRef();
@@ -33,17 +34,13 @@ function CreacionPersona() {
     try {
       const response = await axios
         .post("http://localhost:3001/persona", {
-          nombre: nombre,
-          apellido: apellido,
-          email: email,
-          alias: alias,
+          nombre,
+          apellido,
+          email,
+          alias,
         })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+        .then((res) => console.log(res))
+        .catch((error) => console.log(error));
     } catch (error) {
       console.log(error);
     }
@@ -51,113 +48,77 @@ function CreacionPersona() {
 
   return (
     <>
-      <div className="form">
-        <Button variant="danger" onClick={() => history.goBack()}>
-          Volver
-        </Button>
-        <div className="form">
-          <h1>Crear nueva persona</h1>
-          <Container>
-            <Row>
-              <Col>
-                <Form method="post" action="">
-                  <Form.Group>
-                    <Form.Control
-                      type="text"
-                      name="nombre"
-                      ref={nombreRef}
-                      onChange={comprobarCambios}
-                      placeholder="Nombre"
-                      required
-                    ></Form.Control>
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Control
-                      type="text"
-                      name="apellido"
-                      ref={apellidoRef}
-                      onChange={comprobarCambios}
-                      placeholder="Apellido"
-                      required
-                    ></Form.Control>
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Control
-                      type="text"
-                      name="email"
-                      ref={emailRef}
-                      onChange={comprobarCambios}
-                      placeholder="Email"
-                      required
-                    ></Form.Control>
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Control
-                      type="text"
-                      name="alias"
-                      ref={aliasRef}
-                      onChange={comprobarCambios}
-                      placeholder="Alias"
-                      required
-                    ></Form.Control>
-                  </Form.Group>
-                  <Button variant="danger" type="submit" onClick={crearPersona}>
-                    Registrarse
-                  </Button>
-                </Form>
-              </Col>
-            </Row>
-          </Container>
+      <br></br>
+      <br></br>
 
-          <form action="" method="post" onSubmit={crearPersona}>
-            <div className="top-row">
-              <div className="field-wrap">
-                <input
+      <Container>
+        <Card>
+          <Card.Header>
+            <Card.Title>Crear nueva persona</Card.Title>
+          </Card.Header>
+          <Card.Body>
+            <Form method="post" action="">
+              <Form.Group>
+                <Form.Control
                   type="text"
                   name="nombre"
                   ref={nombreRef}
                   onChange={comprobarCambios}
                   placeholder="Nombre"
                   required
-                />
-              </div>
-              <div className="field-wrap">
-                <input
-                  type="email"
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group>
+                <Form.Control
+                  type="text"
                   name="apellido"
                   ref={apellidoRef}
                   onChange={comprobarCambios}
                   placeholder="Apellido"
                   required
-                />
-              </div>
-              <div className="field-wrap">
-                <input
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group>
+                <Form.Control
                   type="text"
                   name="email"
                   ref={emailRef}
                   onChange={comprobarCambios}
                   placeholder="Email"
                   required
-                />
-              </div>
-              <div className="field-wrap">
-                <input
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group>
+                <Form.Control
                   type="text"
                   name="alias"
                   ref={aliasRef}
                   onChange={comprobarCambios}
                   placeholder="Alias"
                   required
-                />
-              </div>
-            </div>
-            <Button variant="danger" onClick={() => history.goBack()}>
-              Registrarse
-            </Button>
-          </form>
-        </div>
-      </div>
+                ></Form.Control>
+              </Form.Group>
+              <Button variant="danger" type="submit" onClick={crearPersona}>
+                Registrarse
+              </Button>
+              <Button
+                variant="danger"
+                type="reset"
+                style={{ marginLeft: "5px" }}
+              >
+                Limpiar
+              </Button>
+              <Button
+                variant="danger"
+                onClick={() => history.goBack()}
+                className="float-right"
+              >
+                Volver
+              </Button>
+            </Form>
+          </Card.Body>
+        </Card>
+      </Container>
     </>
   );
 }
