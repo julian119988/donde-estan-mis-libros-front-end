@@ -9,7 +9,7 @@ export default function ModificarPersona(props) {
   const [usuarioModificado, setUsuarioModificado] = useState("");
   const history = useHistory();
 
-  const id = props.match.params.id;
+  const id = props.match.params.id; //Obtiene el id que se pasa por params
   const nombreRef = useRef();
   const apellidoRef = useRef();
   const aliasRef = useRef();
@@ -22,6 +22,7 @@ export default function ModificarPersona(props) {
     });
   }
   async function enviarCambios(event) {
+    //Modifica al usuario y luego te redirecciona el listado de personas
     event.preventDefault();
     await axios
       .put(`http://localhost:3001/persona/${id}`, usuarioModificado)

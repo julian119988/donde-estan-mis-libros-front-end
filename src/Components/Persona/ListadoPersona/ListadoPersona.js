@@ -2,6 +2,7 @@ import Table from "react-bootstrap/Table";
 import ItemList from "../../ItemList/ItemList";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import CrearTitulo from "../../ItemList/CrearTitulo";
 
 const ListadoPersona = (props) => {
   const [personas, setPersonas] = useState([""]);
@@ -53,20 +54,15 @@ const ListadoPersona = (props) => {
   return (
     <Table className="table-bordered table-hover">
       <thead className="thead-dark">
-        <tr key="primerTr" className=".thead-dark">
-          {Object.keys(personas[0]).map((key, index) => {
-            return agregarBorrarModificar(key, index);
-
-            // Se leen las keys de el primer item de la tabla, para armar la misma, luego se pone mayuscula la primer letra, (se tiene que hacer una peticion con axios)falta.
-          })}
-        </tr>
+        <CrearTitulo fila={personas[0]} key={Math.random(1000)}></CrearTitulo>
       </thead>
       <tbody>
         {personas.map((fila) => {
+          //A ItemList se le envia de a filas al igual que CrearTitulo
           return (
             <ItemList
               fila={fila}
-              key={returnId(fila)}
+              key={Math.random(1000)}
               url={props.url}
               refresh={forzarEstado}
               pagina="personas"

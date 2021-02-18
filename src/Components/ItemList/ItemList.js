@@ -6,24 +6,27 @@ export default function ItemList(props) {
   let history = useHistory();
 
   function getId(event) {
+    //Retorna el valor del primer campo de la fila que se indique
     event.preventDefault();
     const campo = event.target.parentElement;
     const fila = campo.parentElement;
     return fila.firstChild.textContent;
-
-    // Ademas se tiene que acceder a la db y borrar ahi luego, luego renderizar el componente nuevamente
   }
 
   function borrarItem(id) {
-    axios
-      .delete(props.url + "/" + id)
-      .then((res) => {
-        console.log(res);
-        props.refresh();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    //Borra un un item en la base de datos que coincida con la direcion url y el id. Luego ejecuta la funcion refresh que se envia por props y sirve para renderizar la tabl nuevamente
+    if (window.confirm("Esta seguro que quiere borrar a ese usuario?")) {
+      axios
+        .delete(props.url + "/" + id)
+        .then((res) => {
+          console.log(res);
+          props.refresh();
+        })
+        .then(() => alert("Se ha borrado al usuario correctamente"))
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
   function modificarItem(id) {
     const path = `modificar/` + id;
@@ -39,7 +42,7 @@ export default function ItemList(props) {
 
   function agregarBotones(campo, index) {
     const tamanioObjeto = Object.keys(props.fila).length;
-
+    //Si no es la ultima columna entonces envia solo un campo, si es la ultima columna envia 2 campos, siendo uno de ellos los botones.
     if (!(tamanioObjeto === index + 1)) {
       return <td key={Math.random(1000)}>{campo}</td>;
     } else {
