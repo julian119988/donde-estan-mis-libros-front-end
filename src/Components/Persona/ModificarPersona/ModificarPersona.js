@@ -28,9 +28,13 @@ export default function ModificarPersona(props) {
       .put(`http://localhost:3001/persona/${id}`, usuarioModificado)
       .then((res) => {
         console.log(res.data);
+        alert("Usuario modificado con exito");
+        history.push("/personas/listado");
       })
-      .then(() => history.push("/personas/listado"))
-      .catch((error) => console.log(error));
+
+      .catch((error) => {
+        alert("No se ha podido modificar al usuario.");
+      });
   }
   return (
     <Card>

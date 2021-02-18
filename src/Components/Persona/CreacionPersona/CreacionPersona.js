@@ -37,8 +37,15 @@ function CreacionPersona() {
           email,
           alias,
         })
-        .then((res) => console.log(res))
-        .catch((error) => console.log(error));
+        .then((res) => {
+          console.log(res);
+          alert("Usuario registrado con exito");
+          history.replace("listado");
+        })
+        .catch((error) => {
+          alert("No se ha podido crear al usuario");
+          console.log(error);
+        });
     } catch (error) {
       console.log(error);
     }
