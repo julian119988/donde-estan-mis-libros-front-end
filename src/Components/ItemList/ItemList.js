@@ -18,13 +18,12 @@ export default function ItemList(props) {
     if (window.confirm("Esta seguro que quiere borrar a ese usuario?")) {
       axios
         .delete(props.url + "/" + id)
-        .then((res) => {
-          console.log(res);
+        .then(() => {
+          alert("Se ha borrrado al usuario exitosamente");
           props.refresh();
         })
-        .then(() => alert("Se ha borrado al usuario correctamente"))
         .catch((err) => {
-          console.log(err);
+          alert(err.response.data.mensaje); //Toma el error de la base de datos y lo muestra en pantalla
         });
     }
   }
