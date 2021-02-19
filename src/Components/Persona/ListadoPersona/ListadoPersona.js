@@ -3,15 +3,18 @@ import ItemList from "../../ItemList/ItemList";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import CrearTitulo from "../../ItemList/CrearTitulo";
+import VerMas from "../../ItemList/VerMas";
 
 const ListadoPersona = (props) => {
   const [personas, setPersonas] = useState([""]);
-  const [actualizarLista, setActualizarLista] = useState(false);
+  const [mostrar, setMostrar] = useState(false);
+  const [librosPrestados, setLibrosPrestados] = useState([""]);
+  const [nuevoId, setNuevoId] = useState("");
+  const [titulo, setTitulo] = useState("");
 
   function fetchPersona() {
     return axios.get(props.url).then((response) => {
       setPersonas((personas) => {
-        console.log(response);
         return response.data;
       });
     });
@@ -21,56 +24,68 @@ const ListadoPersona = (props) => {
     fetchPersona();
   }, []);
 
-  function returnId(fila) {
-    //Esta funcion devuelve un id random al inicio ya que no puede definir undefined como key.
-    return fila._id ? fila._id : Math.random(1000);
-  }
   function forzarEstado() {
     fetchPersona();
   }
 
-  function agregarBorrarModificar(key, index) {
-    const tamanioObjeto = Object.keys(personas[0]).length;
-    if (!(tamanioObjeto === index + 1)) {
-      return (
-        <th scope="col" key={Math.random(1000)}>
-          {key.charAt(0).toUpperCase() + key.slice(1)}
-        </th>
-      );
+  function getVerMas(event) {
+    if (event.target.nodeName === "BUTTON") {
+      return 0;
     } else {
-      return (
-        <>
-          <th scope="col" key={Math.random(1000)}>
-            {key.charAt(0).toUpperCase() + key.slice(1)}
-          </th>
-          <th scope="col" key={Math.random(1000)}>
-            Borrar | Editar
-          </th>
-        </>
+      const id = event.target.parentNode.firstChild.textContent;
+      setTitulo(
+        event.target.parentNode.childNodes[2].textContent +
+          " ," +
+          event.target.parentNode.childNodes[1].textContent
       );
+
+      if (nuevoId != id) {
+        setMostrar(true);
+        setNuevoId(id);
+      } else {
+        setMostrar(!mostrar);
+      }
+
+      axios
+        .get(`http://localhost:3001/libro`)
+        .then((response) => {
+          const librosAsociados = response.data.filter(
+            (libro) => libro.persona_id == id
+          );
+          if (librosAsociados[0] === undefined) {
+            setLibrosPrestados(["Esta persona no tiene libros asociados"]);
+          } else {
+            setLibrosPrestados(librosAsociados);
+          }
+        })
+        .catch((error) => console.error(error));
     }
   }
 
   return (
-    <Table className="table-bordered table-hover">
-      <thead className="thead-dark">
-        <CrearTitulo fila={personas[0]} key={Math.random(1000)}></CrearTitulo>
-      </thead>
-      <tbody>
-        {personas.map((fila) => {
-          //A ItemList se le envia de a filas al igual que CrearTitulo
-          return (
-            <ItemList
-              fila={fila}
-              key={Math.random(1000)}
-              url={props.url}
-              refresh={forzarEstado}
-              pagina="personas"
-            />
-          );
-        })}
-      </tbody>
-    </Table>
+    <>
+      <Table className="table-bordered table-hover">
+        <thead className="thead-dark">
+          <CrearTitulo fila={personas[0]} key={Math.random(1000)}></CrearTitulo>
+        </thead>
+        <tbody>
+          {personas.map((fila) => {
+            //A ItemList se le envia de a filas al igual que CrearTitulo
+            return (
+              <ItemList
+                verMas={getVerMas}
+                fila={fila}
+                key={Math.random(1000)}
+                url={props.url}
+                refresh={forzarEstado}
+                pagina="personas"
+              />
+            );
+          })}
+        </tbody>
+      </Table>
+      <VerMas show={mostrar} titulo={titulo} body={librosPrestados}></VerMas>
+    </>
   );
 };
 

@@ -71,7 +71,7 @@ export default function ItemList(props) {
 
   return (
     //cada td necesita una key asi que puse math random, ya que el que importa es tr y le inserto la key en ListadoPersona
-    <tr>
+    <tr onClick={props.verMas} style={{ cursor: "pointer" }}>
       {iterarObjeto(props.fila).map((campo, index) =>
         agregarBotones(campo, index)
       )}
