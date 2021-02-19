@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Card from "react-bootstrap/Card";
 
 function CreacionPersona() {
-
-  const [nuevoUsuario, setNuevoUsuario] = useState();
+  const [nuevoUsuario, setNuevoUsuario] = useState("");
   const history = useHistory();
 
   const nombreRef = useRef();
@@ -22,73 +24,107 @@ function CreacionPersona() {
     });
   }
 
-
   async function crearPersona(e) {
     e.preventDefault();
     console.log("Crear usuario");
     const { nombre, apellido, email, alias } = nuevoUsuario;
+    console.log(nuevoUsuario);
     try {
-      const res = await axios.post("http://localhost:3000/persona", {
-        nombre,
-        apellido,
-        email,
-        alias
-      });
-      console.log(res);
-      history.goBack();
+      const response = await axios
+        .post("http://localhost:3001/persona", {
+          nombre,
+          apellido,
+          email,
+          alias,
+        })
+        .then((res) => {
+          console.log(res);
+          alert("Usuario registrado con exito");
+          history.replace("listado");
+        })
+        .catch((error) => {
+          alert("No se ha podido crear al usuario");
+          console.log(error);
+        });
     } catch (error) {
       console.log(error);
     }
-
   }
 
   return (
     <>
-      <div className="form">
-        <Button variant="danger" onClick={() => history.goBack()}>Volver</Button>
-        <div className="form">
-          <h1>Crear nueva persona</h1>
-          <form action="" method="post" onSubmit={crearPersona}>
-            <div className="top-row">
-              <div className="field-wrap">
-                <input type="text"
+      <br></br>
+      <br></br>
+
+      <Container>
+        <Card>
+          <Card.Header>
+            <Card.Title>Crear nueva persona</Card.Title>
+          </Card.Header>
+          <Card.Body>
+            <Form method="post" action="">
+              <Form.Group>
+                <Form.Control
+                  type="text"
                   name="nombre"
                   ref={nombreRef}
                   onChange={comprobarCambios}
                   placeholder="Nombre"
-                  required />
-              </div>
-              <div className="field-wrap">
-                <input type="email"
+                  required
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group>
+                <Form.Control
+                  type="text"
                   name="apellido"
                   ref={apellidoRef}
                   onChange={comprobarCambios}
                   placeholder="Apellido"
-                  required />
-              </div>
-              <div className="field-wrap">
-                <input type="text"
+                  required
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group>
+                <Form.Control
+                  type="text"
                   name="email"
                   ref={emailRef}
                   onChange={comprobarCambios}
                   placeholder="Email"
-                  required />
-              </div>
-              <div className="field-wrap">
-                <input type="text"
+                  required
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group>
+                <Form.Control
+                  type="text"
                   name="alias"
                   ref={aliasRef}
                   onChange={comprobarCambios}
                   placeholder="Alias"
-                  required />
-              </div>
-            </div>
-            <Button variant="danger" onClick={() => history.goBack()}>Registrarse</Button>
-          </form >
-        </div >
-      </div>
+                  required
+                ></Form.Control>
+              </Form.Group>
+              <Button variant="danger" type="submit" onClick={crearPersona}>
+                Registrarse
+              </Button>
+              <Button
+                variant="danger"
+                type="reset"
+                style={{ marginLeft: "5px" }}
+              >
+                Limpiar
+              </Button>
+              <Button
+                variant="danger"
+                onClick={() => history.goBack()}
+                className="float-right"
+              >
+                Volver
+              </Button>
+            </Form>
+          </Card.Body>
+        </Card>
+      </Container>
     </>
-
   );
 }
 

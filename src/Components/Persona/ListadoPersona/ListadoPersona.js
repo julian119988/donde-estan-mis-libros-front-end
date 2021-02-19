@@ -2,12 +2,18 @@ import Table from "react-bootstrap/Table";
 import ItemList from "../../ItemList/ItemList";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import CrearTitulo from "../../ItemList/CrearTitulo";
+import VerMas from "../../ItemList/VerMas";
 
-const ListadoPersona = () => {
+const ListadoPersona = (props) => {
   const [personas, setPersonas] = useState([""]);
+  const [mostrar, setMostrar] = useState(false);
+  const [librosPrestados, setLibrosPrestados] = useState([""]);
+  const [nuevoId, setNuevoId] = useState("");
+  const [titulo, setTitulo] = useState("");
 
   function fetchPersona() {
-    return axios.get("http://localhost:3001/persona").then((response) => {
+    return axios.get(props.url).then((response) => {
       setPersonas((personas) => {
         return response.data;
       });
@@ -18,33 +24,69 @@ const ListadoPersona = () => {
     fetchPersona();
   }, []);
 
-  function returnId(fila) {
-    //Esta funcion devuelve un id random al inicio ya que no puede definir undefined como key.
-    return fila._id ? fila._id : Math.random(1000);
+  function forzarEstado() {
+    fetchPersona();
+  }
+
+  function getVerMas(event) {
+    if (event.target.nodeName === "BUTTON") {
+      return 0;
+    } else {
+      const id = event.target.parentNode.firstChild.textContent;
+      setTitulo(
+        event.target.parentNode.childNodes[2].textContent +
+          " ," +
+          event.target.parentNode.childNodes[1].textContent
+      );
+
+      if (nuevoId != id) {
+        setMostrar(true);
+        setNuevoId(id);
+      } else {
+        setMostrar(!mostrar);
+      }
+
+      axios
+        .get(`http://localhost:3001/libro`)
+        .then((response) => {
+          const librosAsociados = response.data.filter(
+            (libro) => libro.persona_id == id
+          );
+          if (librosAsociados[0] === undefined) {
+            setLibrosPrestados(["Esta persona no tiene libros asociados"]);
+          } else {
+            setLibrosPrestados(librosAsociados);
+          }
+        })
+        .catch((error) => console.error(error));
+    }
   }
 
   return (
-    <Table className="table-bordered table-hover">
-      <h1> PERSONA </h1>
-      <thead className="thead-dark">
-        <tr key="primerTr" className=".thead-dark">
-          {Object.keys(personas[0]).map((key, index) => {
+    <>
+      <Table className="table-bordered table-hover" responsive>
+        <thead className="thead-dark">
+          <CrearTitulo fila={personas[0]} key={Math.random(1000)}></CrearTitulo>
+        </thead>
+        <tbody>
+          {personas.map((fila) => {
+            //A ItemList se le envia de a filas al igual que CrearTitulo
             return (
-              // Se leen las keys de el primer item de la tabla, para armar la misma, luego se pone mayuscula la primer letra, (se tiene que hacer una peticion con axios)falta.
-              <th scope="col" key={key.toString() + index.toString()}>
-                {key.charAt(0).toUpperCase() + key.slice(1)}
-              </th>
+              <ItemList
+                verMas={getVerMas}
+                fila={fila}
+                key={Math.random(1000)}
+                url={props.url}
+                refresh={forzarEstado}
+                pagina="personas"
+              />
             );
           })}
-        </tr>
-      </thead>
-      <tbody>
-        {personas.map((fila) => {
-          return <ItemList fila={fila} key={returnId(fila)} />;
-        })}
-      </tbody>
-    </Table>
+        </tbody>
+      </Table>
+      <VerMas show={mostrar} titulo={titulo} body={librosPrestados}></VerMas>
+    </>
   );
-}
+};
 
-export default ListadoPersona
+export default ListadoPersona;
