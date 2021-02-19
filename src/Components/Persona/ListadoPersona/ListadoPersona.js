@@ -64,7 +64,7 @@ const ListadoPersona = (props) => {
 
   return (
     <>
-      <Table className="table-bordered table-hover">
+      <Table className="table-bordered table-hover" responsive>
         <thead className="thead-dark">
           <CrearTitulo fila={personas[0]} key={Math.random(1000)}></CrearTitulo>
         </thead>
