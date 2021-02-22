@@ -6,7 +6,11 @@ export default function CrearTitulo(props) {
       <>
         <tr>
           {filaArray.map((campo, index) => {
-            if (filaArray.length !== index + 1) {
+            if (index === 0) {
+              <th scope="col" key={Math.random(1000)} hidden={true}>
+                {campo}
+              </th>;
+            } else if (filaArray.length !== index + 1) {
               return (
                 <th scope="col" key={Math.random(1000)}>
                   {campo.charAt(0).toUpperCase() + campo.slice(1)}
