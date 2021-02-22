@@ -55,6 +55,7 @@ function CrearLibro() {
         console.log("Error inesperado", error);
       });
   }
+
   useEffect(() => {
     fetchCategorias();
   }, []);

@@ -42,7 +42,13 @@ export default function ItemList(props) {
   function agregarBotones(campo, index) {
     const tamanioObjeto = Object.keys(props.fila).length;
     //Si no es la ultima columna entonces envia solo un campo, si es la ultima columna envia 2 campos, siendo uno de ellos los botones.
-    if (!(tamanioObjeto === index + 1)) {
+    if (index === 0) {
+      return (
+        <td key={Math.random(1000)} hidden={true}>
+          {campo}
+        </td>
+      );
+    } else if (!(tamanioObjeto === index + 1)) {
       return <td key={Math.random(1000)}>{campo}</td>;
     } else {
       return (
