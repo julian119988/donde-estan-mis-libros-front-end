@@ -62,7 +62,7 @@ function CreacionPersona() {
             <Card.Title>Crear nueva persona</Card.Title>
           </Card.Header>
           <Card.Body>
-            <Form method="post" action="">
+            <Form onSubmit={crearPersona}>
               <Form.Group>
                 <Form.Control
                   type="text"
@@ -103,7 +103,7 @@ function CreacionPersona() {
                   required
                 ></Form.Control>
               </Form.Group>
-              <Button variant="danger" type="submit" onClick={crearPersona}>
+              <Button variant="danger" type="submit">
                 Registrarse
               </Button>
               <Button
