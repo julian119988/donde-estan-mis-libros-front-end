@@ -23,11 +23,17 @@ function CreacionGenero() {
     const { nombre } = nuevaCategoria;
     try {
       const response = await axios
-        .post("http://localhost:3000/categoria", {
-          nombre,
+        .post("http://localhost:3001/categoria", {
+          nombre
         })
-        .then((res) => console.log(res))
-        .catch((error) => console.log(error));
+        .then((res) => {
+          console.log(res);
+          alert("Categoria creada con exito.");
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("Hubo un error al crear la categoria");
+        });
     } catch (error) {
       console.log(error);
     }
