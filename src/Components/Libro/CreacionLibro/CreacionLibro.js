@@ -61,80 +61,71 @@ function CrearLibro() {
   }, []);
 
   return (
-    <>
-      <br></br>
-      <br></br>
-
-      <Container>
-        <Card>
-          <Card.Header>
-            <Card.Title>Agregar nuevo libro</Card.Title>
-          </Card.Header>
-          <Card.Body>
-            <Form onSubmit={crearLibro}>
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  name="nombre"
-                  ref={nombreRef}
-                  onChange={comprobarCambios}
-                  placeholder="Nombre"
-                  required
-                ></Form.Control>
-              </Form.Group>
-              <Form.Group>
-                <Form.Control
-                  as="textarea"
-                  name="descripcion"
-                  ref={descripcionRef}
-                  onChange={comprobarCambios}
-                  placeholder="Descripcíon"
-                  required
-                ></Form.Control>
-              </Form.Group>
-              <Form.Group>
-                <Form.Control
-                  as="select"
-                  name="categoria_id"
-                  ref={categoriaIdRef}
-                  onChange={comprobarCambios}
-                  placeholder="Categoría"
-                  required
-                >
-                  {
-                    /*funcion que itera las categorias*/
-                    categoria.map((category) => {
-                      return (
-                        <option key={category._id} id={category._id}>
-                          {category.nombre}
-                        </option>
-                      );
-                    })
-                  }
-                </Form.Control>
-              </Form.Group>
-              <Button variant="danger" type="submit">
-                Registrarse
-              </Button>
-              <Button
-                variant="danger"
-                type="reset"
-                style={{ marginLeft: "5px" }}
+    <Container>
+      <Card>
+        <Card.Header>
+          <Card.Title>Agregar nuevo libro</Card.Title>
+        </Card.Header>
+        <Card.Body>
+          <Form onSubmit={crearLibro}>
+            <Form.Group>
+              <Form.Control
+                type="text"
+                name="nombre"
+                ref={nombreRef}
+                onChange={comprobarCambios}
+                placeholder="Nombre"
+                required
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Control
+                as="textarea"
+                name="descripcion"
+                ref={descripcionRef}
+                onChange={comprobarCambios}
+                placeholder="Descripcíon"
+                required
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Control
+                as="select"
+                name="categoria_id"
+                ref={categoriaIdRef}
+                onChange={comprobarCambios}
+                placeholder="Categoría"
+                required
               >
-                Limpiar
-              </Button>
-              <Button
-                variant="danger"
-                onClick={() => history.goBack()}
-                className="float-right"
-              >
-                Volver
-              </Button>
-            </Form>
-          </Card.Body>
-        </Card>
-      </Container>
-    </>
+                {
+                  /*funcion que itera las categorias*/
+                  categoria.map((category) => {
+                    return (
+                      <option key={category._id} id={category._id}>
+                        {category.nombre}
+                      </option>
+                    );
+                  })
+                }
+              </Form.Control>
+            </Form.Group>
+            <Button variant="danger" type="submit">
+              Registrarse
+            </Button>
+            <Button variant="danger" type="reset" style={{ marginLeft: "5px" }}>
+              Limpiar
+            </Button>
+            <Button
+              variant="danger"
+              onClick={() => history.goBack()}
+              className="float-right"
+            >
+              Volver
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }
 

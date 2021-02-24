@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import CrearTitulo from "../../ItemList/CrearTitulo";
 import VerMas from "../../ItemList/VerMas";
+import Container from "react-bootstrap/Container";
 
 const ListadoPersona = (props) => {
   const [personas, setPersonas] = useState([""]);
@@ -63,7 +64,7 @@ const ListadoPersona = (props) => {
   }
 
   return (
-    <>
+    <Container>
       <Table className="table-bordered table-hover" responsive>
         <thead className="thead-dark">
           <CrearTitulo fila={personas[0]} key={Math.random(1000)}></CrearTitulo>
@@ -85,7 +86,7 @@ const ListadoPersona = (props) => {
         </tbody>
       </Table>
       <VerMas show={mostrar} titulo={titulo} body={librosPrestados}></VerMas>
-    </>
+    </Container>
   );
 };
 
