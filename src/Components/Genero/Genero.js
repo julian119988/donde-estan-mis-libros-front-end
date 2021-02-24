@@ -2,11 +2,12 @@ import React from 'react'
 import CreacionGenero from './CreacionGenero/CreacionGenero'
 import Button from "react-bootstrap/Button";
 import { Link, Route, Switch } from "react-router-dom";
+import ListadoGeneros from './ListadoGeneros/ListadoGeneros';
 
 const Genero = () => {
     return (
         <>
-         <h1>Generos</h1>
+            <h1>Generos</h1>
             <Link to="/generos/creacion">
                 <Button variant="danger">Crear Genero</Button>{" "}
             </Link>
@@ -19,7 +20,7 @@ const Genero = () => {
                     <CreacionGenero />
                 </Route>
                 <Route path="/generos/listado">
-                    
+                    <ListadoGeneros />
                 </Route>
 
             </Switch>
