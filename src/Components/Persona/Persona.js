@@ -2,27 +2,38 @@ import { Link, Route, Switch, useHistory } from "react-router-dom";
 import ListadoPersona from "./ListadoPersona/ListadoPersona";
 import CreacionPersona from "./CreacionPersona/CreacionPersona";
 import ModificarPersona from "./ModificarPersona/ModificarPersona";
-
-import "./Persona.css";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 import Button from "react-bootstrap/Button";
 
 function Persona() {
   return (
-    <>
+    <Container>
       <h1>Personas</h1>
+      <br></br>
+      <Container>
+        <Row>
+          <Col>
+            <Link to="/personas/creacion" style={{ textDecoration: "none" }}>
+              <Button variant="danger" block style={{ height: "100%" }}>
+                Crear Persona
+              </Button>{" "}
+            </Link>
+          </Col>
+          <Col>
+            <Link to="/personas/listado" style={{ textDecoration: "none" }}>
+              <Button variant="danger" block style={{ height: "100%" }}>
+                Listado de personas
+              </Button>{" "}
+            </Link>
+          </Col>
+        </Row>
+      </Container>
 
-      <ButtonGroup aria-label="Basic example">
-        <Link to="/personas/creacion">
-          <Button variant="danger">Crear Persona</Button>
-        </Link>
-        <Link to="/personas/listado">
-          <Button variant="danger" style={{ marginLeft: "-4px" }}>
-            Listado de personas
-          </Button>
-        </Link>
-      </ButtonGroup>
+      <br></br>
+      <br></br>
 
       <Switch>
         <Route path="/personas/creacion">
@@ -36,7 +47,7 @@ function Persona() {
           component={ModificarPersona}
         ></Route>
       </Switch>
-    </>
+    </Container>
   );
 }
 

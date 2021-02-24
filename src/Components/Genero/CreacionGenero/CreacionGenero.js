@@ -24,7 +24,7 @@ function CreacionGenero() {
     try {
       const response = await axios
         .post("http://localhost:3001/categoria", {
-          nombre
+          nombre,
         })
         .then((res) => {
           console.log(res);
@@ -40,49 +40,40 @@ function CreacionGenero() {
   }
 
   return (
-    <>
-      <br></br>
-      <br></br>
-
-      <Container>
-        <Card>
-          <Card.Header>
-            <Card.Title>Crear nuevo Genero/Categoria</Card.Title>
-          </Card.Header>
-          <Card.Body>
-            <Form onSubmit={crearCategoria}>
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  name="nombre"
-                  ref={nombreRef}
-                  onChange={comprobarCambios}
-                  placeholder="Nombre"
-                  required
-                ></Form.Control>
-              </Form.Group>
-              <Button variant="danger" type="submit">
-                Crear
-              </Button>
-              <Button
-                variant="danger"
-                type="reset"
-                style={{ marginLeft: "5px" }}
-              >
-                Limpiar
-              </Button>
-              <Button
-                variant="danger"
-                onClick={() => history.goBack()}
-                className="float-right"
-              >
-                Volver
-              </Button>
-            </Form>
-          </Card.Body>
-        </Card>
-      </Container>
-    </>
+    <Container>
+      <Card>
+        <Card.Header>
+          <Card.Title>Crear nuevo Genero/Categoria</Card.Title>
+        </Card.Header>
+        <Card.Body>
+          <Form onSubmit={crearCategoria}>
+            <Form.Group>
+              <Form.Control
+                type="text"
+                name="nombre"
+                ref={nombreRef}
+                onChange={comprobarCambios}
+                placeholder="Nombre"
+                required
+              ></Form.Control>
+            </Form.Group>
+            <Button variant="danger" type="submit">
+              Crear
+            </Button>
+            <Button variant="danger" type="reset" style={{ marginLeft: "5px" }}>
+              Limpiar
+            </Button>
+            <Button
+              variant="danger"
+              onClick={() => history.goBack()}
+              className="float-right"
+            >
+              Volver
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }
 

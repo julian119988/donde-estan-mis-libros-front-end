@@ -52,79 +52,70 @@ function CreacionPersona() {
   }
 
   return (
-    <>
-      <br></br>
-      <br></br>
-
-      <Container>
-        <Card>
-          <Card.Header>
-            <Card.Title>Crear nueva persona</Card.Title>
-          </Card.Header>
-          <Card.Body>
-            <Form onSubmit={crearPersona}>
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  name="nombre"
-                  ref={nombreRef}
-                  onChange={comprobarCambios}
-                  placeholder="Nombre"
-                  required
-                ></Form.Control>
-              </Form.Group>
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  name="apellido"
-                  ref={apellidoRef}
-                  onChange={comprobarCambios}
-                  placeholder="Apellido"
-                  required
-                ></Form.Control>
-              </Form.Group>
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  name="email"
-                  ref={emailRef}
-                  onChange={comprobarCambios}
-                  placeholder="Email"
-                  required
-                ></Form.Control>
-              </Form.Group>
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  name="alias"
-                  ref={aliasRef}
-                  onChange={comprobarCambios}
-                  placeholder="Alias"
-                  required
-                ></Form.Control>
-              </Form.Group>
-              <Button variant="danger" type="submit">
-                Registrarse
-              </Button>
-              <Button
-                variant="danger"
-                type="reset"
-                style={{ marginLeft: "5px" }}
-              >
-                Limpiar
-              </Button>
-              <Button
-                variant="danger"
-                onClick={() => history.goBack()}
-                className="float-right"
-              >
-                Volver
-              </Button>
-            </Form>
-          </Card.Body>
-        </Card>
-      </Container>
-    </>
+    <Container>
+      <Card>
+        <Card.Header>
+          <Card.Title>Crear nueva persona</Card.Title>
+        </Card.Header>
+        <Card.Body>
+          <Form onSubmit={crearPersona}>
+            <Form.Group>
+              <Form.Control
+                type="text"
+                name="nombre"
+                ref={nombreRef}
+                onChange={comprobarCambios}
+                placeholder="Nombre"
+                required
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Control
+                type="text"
+                name="apellido"
+                ref={apellidoRef}
+                onChange={comprobarCambios}
+                placeholder="Apellido"
+                required
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Control
+                type="text"
+                name="email"
+                ref={emailRef}
+                onChange={comprobarCambios}
+                placeholder="Email"
+                required
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Control
+                type="text"
+                name="alias"
+                ref={aliasRef}
+                onChange={comprobarCambios}
+                placeholder="Alias"
+                required
+              ></Form.Control>
+            </Form.Group>
+            <Button variant="danger" type="submit">
+              Registrarse
+            </Button>
+            <Button variant="danger" type="reset" style={{ marginLeft: "5px" }}>
+              Limpiar
+            </Button>
+            <Button
+              variant="danger"
+              onClick={() => history.goBack()}
+              className="float-right"
+            >
+              Volver
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }
 
