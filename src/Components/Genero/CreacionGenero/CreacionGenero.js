@@ -7,7 +7,6 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 
 function CreacionGenero() {
-
   const [nuevaCategoria, setNuevaCategoria] = useState("");
   const history = useHistory();
 
@@ -51,7 +50,7 @@ function CreacionGenero() {
             <Card.Title>Crear nuevo Genero/Categoria</Card.Title>
           </Card.Header>
           <Card.Body>
-            <Form method="post" action="">
+            <Form onSubmit={crearCategoria}>
               <Form.Group>
                 <Form.Control
                   type="text"
@@ -62,7 +61,7 @@ function CreacionGenero() {
                   required
                 ></Form.Control>
               </Form.Group>
-              <Button variant="danger" type="submit" onClick={crearCategoria}>
+              <Button variant="danger" type="submit">
                 Crear
               </Button>
               <Button

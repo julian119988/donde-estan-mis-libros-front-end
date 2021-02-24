@@ -10,14 +10,12 @@ import Card from "react-bootstrap/Card";
 function App() {
   return (
     <BrowserRouter>
-
-      <Container>
+      <Container style={{ marginTop: "20px" }}>
         <Card border="danger">
           <Card.Header>
             <Card.Title>APP DE LIBROS</Card.Title>
           </Card.Header>
           <Card.Body>
-
             <Link to="/personas">
               <Button variant="danger">Personas</Button>{" "}
             </Link>
