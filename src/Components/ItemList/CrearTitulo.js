@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 export default function CrearTitulo(props) {
   const filaArray = Object.keys(props.fila);
 
@@ -22,6 +24,7 @@ export default function CrearTitulo(props) {
                   <th scope="col">
                     {campo.charAt(0).toUpperCase() + campo.slice(1)}
                   </th>
+                  <th hidden={!props.mostrarExtra}>{props.extra}</th>
                   <th scope="col">Borrar | Editar</th>
                 </>
               );

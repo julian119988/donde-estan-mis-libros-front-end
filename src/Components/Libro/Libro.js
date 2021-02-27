@@ -6,6 +6,8 @@ import CreacionLibro from "./CreacionLibro/CreacionLibro";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import ModificarLibro from "./ModificarLibro/ModificarLibro.js";
+import PrestarLibro from "./PrestarLibro/PrestarLibro";
 
 function Libro() {
   return (
@@ -40,6 +42,8 @@ function Libro() {
         <Route path="/libros/listado">
           <ListadoLibro />
         </Route>
+        <Route path="/libros/modificar/:id" component={ModificarLibro}></Route>
+        <Route path="/libros/prestar/:id" component={PrestarLibro}></Route>
       </Switch>
     </Container>
   );

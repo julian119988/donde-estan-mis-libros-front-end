@@ -1,6 +1,9 @@
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import Container from "react-bootstrap/esm/Container";
+import Row from "react-bootstrap/esm/Row";
+import Col from "react-bootstrap/esm/Col";
 
 export default function ItemList(props) {
   let history = useHistory();
@@ -9,17 +12,17 @@ export default function ItemList(props) {
     //Retorna el valor del primer campo de la fila que se indique
     event.preventDefault();
     const campo = event.target.parentElement;
-    const fila = campo.parentElement;
+    const fila = campo.parentElement.parentElement;
     return fila.firstChild.textContent;
   }
 
   function borrarItem(id) {
     //Borra un un item en la base de datos que coincida con la direcion url y el id. Luego ejecuta la funcion refresh que se envia por props y sirve para renderizar la tabl nuevamente
-    if (window.confirm("Esta seguro que quiere borrar a ese usuario?")) {
+    if (window.confirm("Esta seguro que quiere borrar este item?")) {
       axios
         .delete(props.url + "/" + id)
         .then(() => {
-          alert("Se ha borrrado al usuario exitosamente");
+          alert("Se ha borrrado exitosamente");
           props.refresh();
         })
         .catch((err) => {
@@ -54,21 +57,26 @@ export default function ItemList(props) {
       return (
         <>
           <td key={Math.random(1000)}>{campo}</td>
+          <td hidden={!props.mostrarExtra}>{props.extra}</td>
           <td key={Math.random(1000)}>
-            <Button
-              variant="danger"
-              onClick={(event) => borrarItem(getId(event))}
-              key={Math.random(1000)}
-            >
-              Borrar
-            </Button>
-            <Button
-              key={Math.random(1000)}
-              style={{ marginLeft: "5px" }}
-              onClick={(event) => modificarItem(getId(event), props.pagina)}
-            >
-              Editar
-            </Button>
+            <Container className="d-flex align-items-center justify-content-around">
+              <Button
+                variant="danger"
+                onClick={(event) => borrarItem(getId(event))}
+                style={{ margin: "5px" }}
+                key={Math.random(1000)}
+              >
+                Borrar
+              </Button>
+
+              <Button
+                key={Math.random(1000)}
+                style={{ margin: "5px" }}
+                onClick={(event) => modificarItem(getId(event), props.pagina)}
+              >
+                Editar
+              </Button>
+            </Container>
           </td>
         </>
       );
