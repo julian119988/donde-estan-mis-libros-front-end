@@ -67,13 +67,20 @@ const ListadoPersona = (props) => {
     <Container>
       <Table className="table-bordered table-hover" responsive>
         <thead className="thead-dark">
-          <CrearTitulo fila={personas[0]} key={Math.random(1000)}></CrearTitulo>
+          <CrearTitulo
+            mostrarExtra={false}
+            extra={null}
+            fila={personas[0]}
+            key={Math.random(1000)}
+          ></CrearTitulo>
         </thead>
         <tbody>
           {personas.map((fila) => {
             //A ItemList se le envia de a filas al igual que CrearTitulo
             return (
               <ItemList
+                mostrarExtra={false}
+                extra={null}
                 verMas={getVerMas}
                 fila={fila}
                 key={Math.random(1000)}
