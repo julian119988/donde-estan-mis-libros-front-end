@@ -10,32 +10,35 @@ import { useHistory } from "react-router-dom";
 function ListadoLibro(props) {
   const [titulo, setTitulo] = useState([""]);
   const [filas, setFilas] = useState([""]);
-  const [libros, setLibros] = useState();
+  let libros = [""];
+  let categorias = [""];
   const history = useHistory();
   let extra = "";
 
-  function fetchLibros() {
+  function cargaDeDatos() {
     axios
       .get("http://localhost:3001/libro")
       .then((res) => {
-        setFilas(ordenarFilas(res.data));
-        setTitulo(tituloOrdenado(res.data[0]));
-        setLibros(res.data);
+        axios.get(`http://localhost:3001/categoria`).then((categoria) => {
+          libros = res.data;
+          categorias = categoria.data;
+          setFilas(ordenarFilas(libros));
+          setTitulo(tituloOrdenado(libros[0]));
+        });
       })
-
       .catch((err) => console.error(err));
   }
-
   function tituloOrdenado(libro) {
     return {
       _id: libro._id,
       nombre: libro.nombre,
       descripcion: libro.descripcion,
+      categoria: libro.categoria_id,
       prestado: libro.persona_id,
     };
   }
   useEffect(() => {
-    fetchLibros();
+    cargaDeDatos();
   }, []);
 
   function ordenarFilas(libro) {
@@ -44,6 +47,7 @@ function ListadoLibro(props) {
         _id: fila._id,
         nombre: fila.nombre,
         descripcion: fila.descripcion,
+        categoria: obtenerCategoriaNombre(fila),
         prestado: fila.persona_id[0]
           ? BotonDevolver(fila.persona_id[0].alias)
           : BotonPrestar(),
@@ -52,9 +56,9 @@ function ListadoLibro(props) {
     return newArray;
   }
   function forzarEstado() {
-    fetchLibros();
+    cargaDeDatos();
   }
-  function getVerMas() {}
+
   function prestar(event) {
     const id = event.target.parentElement.parentElement.firstChild.textContent;
     history.push(`prestar/${id}`);
@@ -71,6 +75,13 @@ function ListadoLibro(props) {
         </Button>
       </>
     );
+  }
+  function obtenerCategoriaNombre(fila) {
+    return categorias.filter((categoria) => {
+      if (fila.categoria_id[0] === categoria._id) {
+        return categoria.nombre;
+      }
+    })[0].nombre;
   }
   function BotonPrestar() {
     return (
@@ -100,18 +111,6 @@ function ListadoLibro(props) {
       });
   }
 
-  function isLoading(index) {
-    if (libros) {
-      if (libros[index].persona_id[0] != undefined) {
-        extra = libros[index].persona_id[0]._id;
-      } else {
-        extra = "";
-      }
-    } else {
-      extra = "cargando";
-    }
-  }
-
   return (
     <Container>
       <Table className="table-bordered table-hover" responsive>
@@ -125,12 +124,11 @@ function ListadoLibro(props) {
         </thead>
         <tbody>
           {filas.map((fila, index) => {
-            isLoading(index);
             return (
               <ItemList
                 mostrarExtra={false}
                 extra={extra}
-                verMas={getVerMas}
+                verMas={null}
                 fila={fila}
                 key={Math.random(1000)}
                 url={"http://localhost:3001/libro"}

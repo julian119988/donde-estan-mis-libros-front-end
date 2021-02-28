@@ -7,15 +7,26 @@ import { useHistory } from "react-router-dom";
 
 export default function ModificarPersona(props) {
   const [usuarios, setUsuarios] = useState([""]);
-  const [usuarioElegidoId, setUsuarioElegidoId] = useState("");
+
   const history = useHistory();
 
   const id = props.match.params.id; //Obtiene el id que se pasa por params
   const usuarioRef = useRef();
+  let usuarioElegidoId = {
+    persona_id: "",
+  };
 
   useEffect(() => {
     obtenerUsuarios();
   }, []);
+  useEffect(() => {
+    if (usuarioRef) {
+      usuarioElegidoId = {
+        persona_id: usuarioRef.current.selectedOptions[0].id,
+      };
+    }
+  });
+
   function obtenerUsuarios() {
     axios
       .get("http://localhost:3001/persona")
@@ -28,13 +39,9 @@ export default function ModificarPersona(props) {
       });
   }
   function comprobarCambios() {
-    let currentUserId = usuarios.filter(
-      (user) => user.nombre === usuarioRef.current.value
-    );
-
-    setUsuarioElegidoId({
-      persona_id: currentUserId[0]._id,
-    });
+    usuarioElegidoId = {
+      persona_id: usuarioRef.current.selectedOptions[0].id,
+    };
   }
   async function enviarCambios(event) {
     //Modifica al usuario y luego te redirecciona el listado de personas
@@ -59,6 +66,7 @@ export default function ModificarPersona(props) {
         <Form onSubmit={enviarCambios}>
           <Form.Group>
             <Form.Control
+              defaultValue={"..."}
               as="select"
               name="persona_id"
               ref={usuarioRef}
@@ -71,7 +79,7 @@ export default function ModificarPersona(props) {
                 usuarios.map((user) => {
                   return (
                     <option key={user._id} id={user._id}>
-                      {user.nombre}
+                      {user.alias}
                     </option>
                   );
                 })
