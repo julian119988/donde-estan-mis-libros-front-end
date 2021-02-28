@@ -3,9 +3,21 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form"
 
 const ListadoGeneros = (props) => {
   const [generos, setGeneros] = useState([""]);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const [value, setValue] = useState('');
+  const [id, setID] = useState('');
+
+  function handleShow(currentGender,currentID) {
+    setValue(currentGender);
+    setID(currentID);
+    setShow(true);
+  }
 
   function fetchGeneros() {
     return axios.get("http://localhost:3001/categoria").then((response) => {
@@ -34,7 +46,31 @@ const ListadoGeneros = (props) => {
     }
   };
 
-  function modificarGenero() {}
+  const onFormSubmit = e => {
+    e.preventDefault()
+    const formData = new FormData(e.target),
+          formDataObj = Object.fromEntries(formData.entries())
+    console.log(formDataObj, value, id);
+    modificarGenero(id,formDataObj.gender);
+  }
+
+  function modificarGenero(currentId, currentName){
+    try {
+      axios({
+        method: 'put',
+        url: `http://localhost:3001/categoria/${id}`,
+        data: {
+          id: currentId,
+          nombre: currentName
+        }
+      }).then(response =>{
+        fetchGeneros();
+      });
+    } catch (error) {
+      console.log("error", error);
+      alert(error.response.data.mensaje);
+    }
+  }
 
   return (
     <Container>
@@ -60,11 +96,34 @@ const ListadoGeneros = (props) => {
                       <Button
                         key={index}
                         style={{ marginLeft: "5px" }}
-                        onClick={(event) => modificarGenero(genero)}
+                        onClick={(event) => handleShow(genero.nombre, genero._id)}
                       >
                         {" "}
                         Modificar{" "}
                       </Button>
+                      <Modal show={show} onHide={handleClose}>
+                      <Form onSubmit={onFormSubmit}>
+                        <Modal.Header closeButton>
+                          <Modal.Title>Modificar genero</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form.Label>Nombre del genero</Form.Label>
+                            <Form.Control type="text" value={value} disabled />
+                            <Form.Group controlId="formBasicPassword">
+                              <Form.Label>Nuevo genero</Form.Label>
+                              <Form.Control type="text" name="gender" />
+                            </Form.Group>
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button variant="secondary" onClick={handleClose}>
+                            Close
+                          </Button>
+                          <Button variant="primary" type="submit" onClick={handleClose}>
+                            Save Changes
+                          </Button>
+                        </Modal.Footer>
+                        </Form>
+                      </Modal>
                     </td>
                   </tr>
                 </>
