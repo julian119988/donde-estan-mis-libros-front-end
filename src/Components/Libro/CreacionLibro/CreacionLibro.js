@@ -37,7 +37,7 @@ function CrearLibro() {
       .then((response) => {
         console.log(response);
         alert("Libro agregado exitosamente");
-        history.goBack();
+        history.replace("listado");
       })
       .catch((error) => {
         alert(error.response.data.mensaje);

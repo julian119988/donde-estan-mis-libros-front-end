@@ -22,10 +22,11 @@ const ListadoGeneros = (props) => {
     console.log(genero);
 
     //Borra un un item en la base de datos que coincida con la direcion url y el id. Luego ejecuta la funcion refresh que se envia por props y sirve para renderizar la tabl nuevamente
-    if (window.confirm("Esta seguro que quiere borrar a ese usuario?")) {
+    if (window.confirm("Esta seguro que quiere borrar a ese item?")) {
       try {
         await axios.delete(`http://localhost:3001/categoria/${genero._id}`);
-        alert("Se ha borrrado al usuario exitosamente");
+        alert("Se ha borrrado al genero exitosamente");
+        fetchGeneros();
       } catch (error) {
         console.log("error", error);
         alert(error.response.data.mensaje);
