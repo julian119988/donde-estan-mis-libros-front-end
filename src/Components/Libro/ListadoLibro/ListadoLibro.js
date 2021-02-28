@@ -78,11 +78,12 @@ function ListadoLibro(props) {
   }
   function obtenerCategoriaNombre(fila) {
     return categorias.filter((categoria) => {
-      if (fila.categoria_id[0] === categoria._id) {
+      if (fila.categoria_id[0]._id === categoria._id) {
         return categoria.nombre;
       }
     })[0].nombre;
   }
+
   function BotonPrestar() {
     return (
       <>
