@@ -12,6 +12,7 @@ const ListadoGeneros = (props) => {
   const handleClose = () => setShow(false);
   const [value, setValue] = useState('');
   const [id, setID] = useState('');
+  const [libros, setLibros] = useState([""]);
 
   function handleShow(currentGender,currentID) {
     setValue(currentGender);
@@ -63,14 +64,34 @@ const ListadoGeneros = (props) => {
           id: currentId,
           nombre: currentName
         }
-      }).then(response =>{
-        fetchGeneros();
+      }).then(response => {
+        if(response.status == 200){
+          alert("se ha editado el genero exitosamente");
+          fetchGeneros();
+        }
       });
     } catch (error) {
       console.log("error", error);
       alert(error.response.data.mensaje);
     }
   }
+
+  const searchCategories = async (id) => {
+    console.log(id)
+      try {
+        await axios.get(`http://localhost:3001/libro/ctLibro/${id}`).then(response => {
+          console.log(response.data)
+          setLibros(response.data)
+          if(response.data == [] || response.data == null || response.data == 0){
+            alert("No existen libros bajo esta categoria")
+          }
+        });
+     
+      } catch (error) {
+        console.log("error", error);
+        alert(error.response.data.mensaje);
+      }
+  };
 
   return (
     <Container>
@@ -83,6 +104,15 @@ const ListadoGeneros = (props) => {
                 <>
                   <tr key={index}>
                     <td>{genero.nombre} </td>
+                    <td>
+                    <Button
+                        variant="secondary"
+                        onClick={(event) => searchCategories(genero._id)}
+                        key={index}
+                      >
+                        Buscar libros por genero
+                      </Button>
+                    </td>
                     <td>
                       <Button
                         variant="danger"
