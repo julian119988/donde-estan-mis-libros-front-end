@@ -8,14 +8,13 @@ const ListadoGeneros = (props) => {
   const [generos, setGeneros] = useState([""]);
 
   function fetchGeneros() {
-    console.log("fetchGeneros: ");
     return axios.get("http://localhost:3001/categoria").then((response) => {
+      console.log(response.data);
       setGeneros(response.data);
     });
   }
 
   useEffect(() => {
-    console.log("useEffect");
     fetchGeneros();
   }, []);
 
@@ -29,7 +28,7 @@ const ListadoGeneros = (props) => {
         alert("Se ha borrrado al usuario exitosamente");
       } catch (error) {
         console.log("error", error);
-        alert(error.mensaje);
+        alert(error.response.data.mensaje);
       }
     }
   };

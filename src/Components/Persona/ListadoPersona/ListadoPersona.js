@@ -50,9 +50,12 @@ const ListadoPersona = (props) => {
       axios
         .get(`http://localhost:3001/libro`)
         .then((response) => {
-          const librosAsociados = response.data.filter(
-            (libro) => libro.persona_id == id
-          );
+          const librosAsociados = response.data.filter((libro) => {
+            if (libro.persona_id[0]) {
+              console.log(libro.persona_id);
+              return libro.persona_id[0]._id === id;
+            }
+          });
           if (librosAsociados[0] === undefined) {
             setLibrosPrestados(["Esta persona no tiene libros asociados"]);
           } else {
