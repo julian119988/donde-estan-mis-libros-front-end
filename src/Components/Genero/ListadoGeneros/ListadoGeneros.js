@@ -124,78 +124,80 @@ const ListadoGeneros = (props) => {
   return (
     <Container>
       <Table className="table-bordered table-hover" responsive>
-        <thead className="thead-dark">Generos disponibles</thead>
+        <thead className="thead-dark">
+          <tr>
+            <th colSpan={4} style={{ textAlign: "center" }}>
+              Generos disponibles
+            </th>
+          </tr>
+        </thead>
         <tbody>
-          <td>
-            {generos.map((genero, index) => {
-              return (
-                <>
-                  <tr key={index}>
-                    <td>{genero.nombre} </td>
-                    <td>
-                      <Button
-                        variant="secondary"
-                        onClick={(event) =>
-                          searchCategories(genero._id, genero.nombre)
-                        }
-                        key={index}
-                      >
-                        Buscar libros por genero
-                      </Button>
-                    </td>
-                    <td>
-                      <Button
-                        variant="danger"
-                        onClick={(event) => borrarGenero(genero)}
-                        key={index}
-                      >
-                        Borrar
-                      </Button>
-                    </td>
-                    <td>
-                      <Button
-                        key={index}
-                        style={{ marginLeft: "5px" }}
-                        onClick={(event) =>
-                          handleShow(genero.nombre, genero._id)
-                        }
-                      >
-                        {" "}
-                        Modificar{" "}
-                      </Button>
-                      <Modal show={show} onHide={handleClose}>
-                        <Form onSubmit={onFormSubmit}>
-                          <Modal.Header closeButton>
-                            <Modal.Title>Modificar genero</Modal.Title>
-                          </Modal.Header>
-                          <Modal.Body>
-                            <Form.Label>Nombre del genero</Form.Label>
-                            <Form.Control type="text" value={value} disabled />
-                            <Form.Group controlId="formBasicPassword">
-                              <Form.Label>Nuevo genero</Form.Label>
-                              <Form.Control type="text" name="gender" />
-                            </Form.Group>
-                          </Modal.Body>
-                          <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>
-                              Cerrar
-                            </Button>
-                            <Button
-                              variant="primary"
-                              type="submit"
-                              onClick={handleClose}
-                            >
-                              Guardar cambios
-                            </Button>
-                          </Modal.Footer>
-                        </Form>
-                      </Modal>
-                    </td>
-                  </tr>
-                </>
-              );
-            })}{" "}
-          </td>
+          {generos.map((genero, index) => {
+            return (
+              <>
+                <tr key={index}>
+                  <td>{genero.nombre} </td>
+                  <td>
+                    <Button
+                      variant="secondary"
+                      onClick={(event) =>
+                        searchCategories(genero._id, genero.nombre)
+                      }
+                      key={index}
+                    >
+                      Buscar libros por genero
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      variant="danger"
+                      onClick={(event) => borrarGenero(genero)}
+                      key={index}
+                    >
+                      Borrar
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      key={index}
+                      style={{ marginLeft: "5px" }}
+                      onClick={(event) => handleShow(genero.nombre, genero._id)}
+                    >
+                      {" "}
+                      Modificar{" "}
+                    </Button>
+                    <Modal show={show} onHide={handleClose}>
+                      <Form onSubmit={onFormSubmit}>
+                        <Modal.Header closeButton>
+                          <Modal.Title>Modificar genero</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <Form.Label>Nombre del genero</Form.Label>
+                          <Form.Control type="text" value={value} disabled />
+                          <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Nuevo genero</Form.Label>
+                            <Form.Control type="text" name="gender" />
+                          </Form.Group>
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button variant="secondary" onClick={handleClose}>
+                            Cerrar
+                          </Button>
+                          <Button
+                            variant="primary"
+                            type="submit"
+                            onClick={handleClose}
+                          >
+                            Guardar cambios
+                          </Button>
+                        </Modal.Footer>
+                      </Form>
+                    </Modal>
+                  </td>
+                </tr>
+              </>
+            );
+          })}
         </tbody>
       </Table>
       <Container>

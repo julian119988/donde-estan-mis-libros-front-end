@@ -36,21 +36,17 @@ export default function Navbar() {
       <BNavbar.Toggle aria-controls="responsive-navbar-nav" />
       <BNavbar.Collapse id="responsive-navbar-nav">
         <Nav className="ml-auto" onClick={cerrarNav}>
-          <Nav.Link>
-            <Link to="/personas" className="linkTitulo">
-              Personas
-            </Link>
-          </Nav.Link>
-          <Nav.Link>
-            <Link to="/libros" className="linkTitulo">
-              Libros
-            </Link>
-          </Nav.Link>
-          <Nav.Link>
-            <Link to="/generos" className="linkTitulo">
-              Generos
-            </Link>
-          </Nav.Link>
+          <Link to="/personas" className="linkTitulo">
+            Personas
+          </Link>
+          <span style={{ display: "inline-block", width: "20px" }}></span>
+          <Link to="/libros" className="linkTitulo">
+            Libros
+          </Link>
+          <span style={{ display: "inline-block", width: "20px" }}></span>
+          <Link to="/generos" className="linkTitulo">
+            Generos
+          </Link>
         </Nav>
       </BNavbar.Collapse>
     </BNavbar>
