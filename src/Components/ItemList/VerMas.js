@@ -19,7 +19,7 @@ export default function VerMas(props) {
         props.body.map((item) => {
           return (
             <>
-              <Col style={{ border: "1px solid black" }}>
+              <Col>
                 <Row className="d-flex justify-content-around align-items-baseline">
                   <p>
                     <strong>Id: </strong> {item._id}

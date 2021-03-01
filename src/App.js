@@ -15,7 +15,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <Container style={{ marginTop: "100px" , height: "100vh"}}>
+      <Container style={{ marginTop: "100px", marginBottom: "150px" }}>
         <Card border="danger">
           <Card.Body>
             <Switch>
@@ -33,7 +33,7 @@ function App() {
           </Card.Body>
         </Card>
       </Container>
-        <Footer />
+      <Footer />
     </BrowserRouter>
   );
 }
