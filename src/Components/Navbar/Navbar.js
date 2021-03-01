@@ -26,6 +26,7 @@ export default function Navbar() {
       variant="dark"
       expanded={navExpanded}
       onToggle={toggleNav}
+      className="fixed-top"
     >
       <BNavbar.Brand>
         <Link className="titulo" to="/" onClick={cerrarNav}>

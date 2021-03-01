@@ -2,8 +2,9 @@ import React from 'react'
 
 
 const Footer = () => {
+ 
     return (
-        <div className="bg-dark text-white text-center px-5 py-3 ">
+        <div className="bg-dark text-white text-center px-3 pt-3 mt-5 fixed-bottom">
             <div className="row d-flex align-items-center">
                 <div className="col-md-4">
                     <h5>Copyright © 2020 - { new Date().getFullYear() }</h5>
