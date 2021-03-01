@@ -9,12 +9,13 @@ import Card from "react-bootstrap/Card";
 import Navbar from "./Components/Navbar/Navbar";
 
 import Home from "./Components/Home/Home";
+import Footer from "./Components/Footer/Footer";
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <Container style={{ marginTop: "20px" }}>
+      <Container style={{ marginTop: "20px", height: "calc(100vh - 71px - 140px)" }}>
         <Card border="danger">
           <Card.Body>
             <Switch>
@@ -32,6 +33,7 @@ function App() {
           </Card.Body>
         </Card>
       </Container>
+        <Footer />
     </BrowserRouter>
   );
 }
