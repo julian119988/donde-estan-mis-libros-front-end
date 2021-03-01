@@ -29,6 +29,7 @@ function CreacionGenero() {
         .then((res) => {
           console.log(res);
           alert("Categoria creada con exito.");
+          history.replace("listado");
         })
         .catch((error) => {
           console.log(error);
