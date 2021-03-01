@@ -20,14 +20,20 @@ export default function VerMas(props) {
           return (
             <>
               <Col>
-                <Row>
-                  <strong>Id: </strong> {item._id}
+                <Row className="d-flex justify-content-around align-items-baseline">
+                  <p>
+                    <strong>Id: </strong> {item._id}
+                  </p>
                 </Row>
-                <Row>
-                  <strong>Nombre: </strong> {item.nombre}
+                <Row className="d-flex justify-content-around align-items-baseline">
+                  <p>
+                    <strong>Nombre: </strong> {item.nombre}
+                  </p>
                 </Row>
-                <Row>
-                  <strong>Descripcion: </strong> {item.descripcion}
+                <Row className="d-flex justify-content-around align-items-baseline">
+                  <p>
+                    <strong>Descripcion: </strong> {item.descripcion}
+                  </p>
                 </Row>
                 <br />
               </Col>
@@ -46,7 +52,7 @@ export default function VerMas(props) {
         <Container>
           <Card>
             <Card.Header>
-              <strong>Libros prestados a {props.titulo}</strong>
+              <strong>{props.titulo}</strong>
             </Card.Header>
             <Card.Body>
               <Row>{cardBody.map((item) => item)}</Row>

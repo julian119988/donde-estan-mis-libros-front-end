@@ -4,17 +4,21 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form"
+import Form from "react-bootstrap/Form";
+import VerMas from "../../ItemList/VerMas";
 
 const ListadoGeneros = (props) => {
   const [generos, setGeneros] = useState([""]);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const [value, setValue] = useState('');
-  const [id, setID] = useState('');
+  const [value, setValue] = useState("");
+  const [id, setID] = useState("");
   const [libros, setLibros] = useState([""]);
+  const [mostrar, setMostrar] = useState(false);
+  const [titulo, setTitulo] = useState("");
+  const [nuevoId, setNuevoId] = useState("");
 
-  function handleShow(currentGender,currentID) {
+  function handleShow(currentGender, currentID) {
     setValue(currentGender);
     setID(currentID);
     setShow(true);
@@ -47,50 +51,74 @@ const ListadoGeneros = (props) => {
     }
   };
 
-  const onFormSubmit = e => {
-    e.preventDefault()
+  const onFormSubmit = (e) => {
+    e.preventDefault();
     const formData = new FormData(e.target),
-          formDataObj = Object.fromEntries(formData.entries())
+      formDataObj = Object.fromEntries(formData.entries());
     console.log(formDataObj, value, id);
-    modificarGenero(id,formDataObj.gender);
-  }
+    if (formDataObj.gender.toUpperCase() === value.toUpperCase()) {
+      alert(
+        "Error, no se puede poner el mismo nombre de una categoria ya existente."
+      );
+    } else {
+      modificarGenero(id, formDataObj.gender);
+    }
+  };
 
-  function modificarGenero(currentId, currentName){
-    try {
+  function modificarGenero(currentId, currentName) {
+    if (currentName) {
       axios({
-        method: 'put',
+        method: "put",
         url: `http://localhost:3001/categoria/${id}`,
         data: {
           id: currentId,
-          nombre: currentName
-        }
-      }).then(response => {
-        if(response.status == 200){
-          alert("se ha editado el genero exitosamente");
-          fetchGeneros();
-        }
-      });
+          nombre: currentName,
+        },
+      })
+        .then((response) => {
+          if (response.status == 200) {
+            alert("Se ha editado el genero exitosamente");
+            fetchGeneros();
+          }
+        })
+        .catch((error) => {
+          alert(error.response.data.mensaje);
+        });
+    } else {
+      alert("No se puede ingresar un campo vacio");
+    }
+  }
+
+  const searchCategories = async (id, genero) => {
+    try {
+      await axios
+        .get(`http://localhost:3001/libro/ctLibro/${id}`)
+        .then((response) => {
+          console.log(response.data);
+          if (
+            response.data == [] ||
+            response.data == null ||
+            response.data == 0
+          ) {
+            alert("No existen libros bajo esta categoria");
+            setMostrar(false);
+          } else {
+            //Consulta exitosa
+            if (nuevoId === id) {
+              setMostrar(!mostrar);
+            } else {
+              setMostrar(true);
+              setNuevoId(id);
+            }
+
+            setTitulo(`Libros pertenecientes a la categoria: ${genero}`);
+            setLibros(response.data);
+          }
+        });
     } catch (error) {
       console.log("error", error);
       alert(error.response.data.mensaje);
     }
-  }
-
-  const searchCategories = async (id) => {
-    console.log(id)
-      try {
-        await axios.get(`http://localhost:3001/libro/ctLibro/${id}`).then(response => {
-          console.log(response.data)
-          setLibros(response.data)
-          if(response.data == [] || response.data == null || response.data == 0){
-            alert("No existen libros bajo esta categoria")
-          }
-        });
-     
-      } catch (error) {
-        console.log("error", error);
-        alert(error.response.data.mensaje);
-      }
   };
 
   return (
@@ -105,9 +133,11 @@ const ListadoGeneros = (props) => {
                   <tr key={index}>
                     <td>{genero.nombre} </td>
                     <td>
-                    <Button
+                      <Button
                         variant="secondary"
-                        onClick={(event) => searchCategories(genero._id)}
+                        onClick={(event) =>
+                          searchCategories(genero._id, genero.nombre)
+                        }
                         key={index}
                       >
                         Buscar libros por genero
@@ -126,32 +156,38 @@ const ListadoGeneros = (props) => {
                       <Button
                         key={index}
                         style={{ marginLeft: "5px" }}
-                        onClick={(event) => handleShow(genero.nombre, genero._id)}
+                        onClick={(event) =>
+                          handleShow(genero.nombre, genero._id)
+                        }
                       >
                         {" "}
                         Modificar{" "}
                       </Button>
                       <Modal show={show} onHide={handleClose}>
-                      <Form onSubmit={onFormSubmit}>
-                        <Modal.Header closeButton>
-                          <Modal.Title>Modificar genero</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
+                        <Form onSubmit={onFormSubmit}>
+                          <Modal.Header closeButton>
+                            <Modal.Title>Modificar genero</Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
                             <Form.Label>Nombre del genero</Form.Label>
                             <Form.Control type="text" value={value} disabled />
                             <Form.Group controlId="formBasicPassword">
                               <Form.Label>Nuevo genero</Form.Label>
                               <Form.Control type="text" name="gender" />
                             </Form.Group>
-                        </Modal.Body>
-                        <Modal.Footer>
-                          <Button variant="secondary" onClick={handleClose}>
-                            Close
-                          </Button>
-                          <Button variant="primary" type="submit" onClick={handleClose}>
-                            Save Changes
-                          </Button>
-                        </Modal.Footer>
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                              Cerrar
+                            </Button>
+                            <Button
+                              variant="primary"
+                              type="submit"
+                              onClick={handleClose}
+                            >
+                              Guardar cambios
+                            </Button>
+                          </Modal.Footer>
                         </Form>
                       </Modal>
                     </td>
@@ -162,6 +198,9 @@ const ListadoGeneros = (props) => {
           </td>
         </tbody>
       </Table>
+      <Container>
+        <VerMas show={mostrar} titulo={titulo} body={libros}></VerMas>
+      </Container>
     </Container>
   );
 };

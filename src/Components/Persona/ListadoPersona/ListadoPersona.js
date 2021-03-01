@@ -35,7 +35,8 @@ const ListadoPersona = (props) => {
     } else {
       const id = event.target.parentNode.firstChild.textContent;
       setTitulo(
-        event.target.parentNode.childNodes[2].textContent +
+        "Libros prestados a " +
+          event.target.parentNode.childNodes[2].textContent +
           " ," +
           event.target.parentNode.childNodes[1].textContent
       );
@@ -95,7 +96,9 @@ const ListadoPersona = (props) => {
           })}
         </tbody>
       </Table>
-      <VerMas show={mostrar} titulo={titulo} body={librosPrestados}></VerMas>
+      <Container>
+        <VerMas show={mostrar} titulo={titulo} body={librosPrestados}></VerMas>
+      </Container>
     </Container>
   );
 };
